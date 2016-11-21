@@ -1,0 +1,36 @@
+#!/bin/bash
+#Sniffs surrounding networks using Alfa RTL8187 driver and dumps to screen using airodump-ng
+
+echo "Killing airmon-ng process conflicts"
+airmon-ng check kill
+sleep .5
+
+echo "Starting the monitor interface for wlan0 (alfa card)"
+airmon-ng start wlan0
+sleep .5
+
+echo "Bringing wlan0mon down"
+ifconfig wlan0mon down
+sleep .5
+
+echo "Setting wlan0mon to monitor mode"
+iwconfig wlan0mon mode monitor
+sleep .5
+
+echo "Bringing wlan0mon back up"
+ifconfig wlan0mon up
+sleep .5
+
+echo "Dumping sniff contents to screen"
+airodump-ng wlan0mon
+
+echo "Stopping airmon for wlan0"
+airmon-ng stop wlan0mon
+sleep .5
+
+echo "Setting wlan0 back to managed mode from monitor mode"
+iwconfig wlan0 mode managed
+sleep .5
+
+echo "Resetting network manager"
+service network-manager start

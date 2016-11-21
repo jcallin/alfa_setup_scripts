@@ -1,0 +1,13 @@
+#!/bin/bash
+#Sets wlan0 back to managed mode
+
+"Stopping airmon for wlan0"
+airmon-ng stop wlan0mon
+sleep .5
+
+echo "Setting wlan0 back to managed mode from monitor mode"
+iwconfig wlan0 mode managed
+sleep .5
+
+echo "Resetting network manager"
+service network-manager start

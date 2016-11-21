@@ -1,0 +1,24 @@
+#!/bin/bash
+#Sets wlan0 to monitor mode
+ 
+echo "Killing airmon-ng process conflicts"
+airmon-ng check kill
+sleep .5
+
+echo "Starting the monitor interface for wlan0 (alfa card)"
+airmon-ng start wlan0
+sleep .5
+
+echo "Bringing wlan0mon down"
+ifconfig wlan0mon down
+sleep .5
+
+echo "Setting wlan0mon to monitor mode"
+iwconfig wlan0mon mode monitor
+sleep .5
+
+echo "Bringing wlan0mon back up"
+ifconfig wlan0mon up
+sleep .5
+
+echo "wlan0mon is now in monitor mode"
